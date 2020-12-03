@@ -1,0 +1,12 @@
+<PaymentOrder>
+    <transKind>kt</transKind>
+    <paymentOrderNumber>1234567890</paymentOrderNumber>
+    <date>2020-12-03T09:28:15.637+00:00</date>
+    <paymentSum>1111.11</paymentSum>
+    <commissionSum>22.22</commissionSum>
+    <paymentPurpose>test_purpose</paymentPurpose>
+    <paymentPriority>5</paymentPriority>
+    <paymentPriorityAuto>n</paymentPriorityAuto>
+    <paymentSendType>s</paymentSendType>
+    <paymentPurposeCode>1</paymentPurposeCode>
+</PaymentOrder>
