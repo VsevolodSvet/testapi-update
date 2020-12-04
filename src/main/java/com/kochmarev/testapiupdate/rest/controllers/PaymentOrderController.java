@@ -3,8 +3,8 @@ package com.kochmarev.testapiupdate.rest.controllers;
 import com.kochmarev.testapiupdate.rest.data.dto.PaymentOrderDto;
 import com.kochmarev.testapiupdate.rest.services.PaymentOrderService;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,18 +13,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/payment-orders")
+@RequestMapping(value = "/payment-orders", produces = {MediaType.APPLICATION_XML_VALUE})
 @AllArgsConstructor
 public class PaymentOrderController {
 
-    private PaymentOrderService service;
+    private final PaymentOrderService paymentOrderService;
 
-    @SneakyThrows
     @PutMapping("{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public PaymentOrderDto updatePaymentOrder(@RequestBody PaymentOrderDto newPaymentOrder, @PathVariable Long id) {
-        return service.updatePaymentOrder(newPaymentOrder, id);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public PaymentOrderDto updatePaymentOrder(@RequestBody PaymentOrderDto paymentOrderDto, @PathVariable Long id) throws Exception {
+        return paymentOrderService.updatePaymentOrder(paymentOrderDto, id);
     }
-
-
 }

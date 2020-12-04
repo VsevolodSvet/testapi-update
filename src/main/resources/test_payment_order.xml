@@ -1,4 +1,4 @@
-<PaymentOrder>
+<paymentOrderDto>
     <transKind>kt</transKind>
     <paymentOrderNumber>1234567890</paymentOrderNumber>
     <date>2020-12-03T09:28:15.637+00:00</date>
@@ -9,4 +9,4 @@
     <paymentPriorityAuto>n</paymentPriorityAuto>
     <paymentSendType>s</paymentSendType>
     <paymentPurposeCode>1</paymentPurposeCode>
-</PaymentOrder>
+</paymentOrderDto>

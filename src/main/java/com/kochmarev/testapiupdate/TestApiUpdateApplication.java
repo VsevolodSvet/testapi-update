@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class TestapiUpdateApplication {
+public class TestApiUpdateApplication {
 
     public static void main(String[] args) {
-		SpringApplication.run(TestapiUpdateApplication.class, args);
+		SpringApplication.run(TestApiUpdateApplication.class, args);
 	}
 
 }

@@ -11,7 +11,7 @@ import java.util.Formatter;
 
 @ControllerAdvice
 @Slf4j
-public class POExceptionHandler {
+public class PaymentOrderExceptionHandler {
 
     @ExceptionHandler(NoContentToUpdateException.class)
     public ResponseEntity<?> noContentToUpdateExceptionHandler(NoContentToUpdateException e, WebRequest request) {
