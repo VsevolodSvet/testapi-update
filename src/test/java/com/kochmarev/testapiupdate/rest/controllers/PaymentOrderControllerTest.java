@@ -14,9 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import static com.kochmarev.testapiupdate.utils.CommonHelper.readResourcesFileContentAsString;
 import static org.junit.Assert.assertEquals;
@@ -50,20 +49,6 @@ public class PaymentOrderControllerTest {
     @SneakyThrows
     public void updatePaymentOrder_positive() {
 
-        PaymentOrder oldPaymentOrder = repository.findByPaymentOrderNumber("1234");
-        Date oldDateToCheck = new GregorianCalendar(2020, Calendar.DECEMBER, 4).getTime();
-
-        assertEquals(oldPaymentOrder.getId().longValue(), 1L);
-        assertEquals(oldPaymentOrder.getCommissionSum().compareTo(BigDecimal.valueOf(-100L)), 0);
-        assertEquals(oldPaymentOrder.getDate().compareTo(oldDateToCheck), 0);
-        assertEquals(oldPaymentOrder.getPaymentPriority(), "0");
-        assertEquals(oldPaymentOrder.getPaymentPriorityAuto(), "y");
-        assertEquals(oldPaymentOrder.getPaymentPurpose(), "before_update_1");
-        assertEquals(oldPaymentOrder.getPaymentPurposeCode(), "0");
-        assertEquals(oldPaymentOrder.getPaymentSendType(), "z");
-        assertEquals(oldPaymentOrder.getPaymentSum().compareTo(BigDecimal.ZERO), 0);
-        assertEquals(oldPaymentOrder.getTransKind(), "z");
-
         mockMvc.perform(put("/payment-orders/{id}", 1)
                 .content(readResourcesFileContentAsString("test_payment_order.xml"))
                 .contentType(MediaType.APPLICATION_XML)
@@ -71,7 +56,7 @@ public class PaymentOrderControllerTest {
                 .andExpect(status().isNoContent())
                 .andExpect(xpath("/paymentOrderDto/transKind").string("kt"))
                 .andExpect(xpath("/paymentOrderDto/paymentOrderNumber").string("1234567890"))
-                .andExpect(xpath("/paymentOrderDto/date").string("2020-12-03T09:28:15.637+00:00"))
+                .andExpect(xpath("/paymentOrderDto/date").string("2020-12-03T09:28:00.000+00:00"))
                 .andExpect(xpath("/paymentOrderDto/paymentSum").string("1111.11"))
                 .andExpect(xpath("/paymentOrderDto/commissionSum").string("22.22"))
                 .andExpect(xpath("/paymentOrderDto/paymentPurpose").string("test_purpose"))
@@ -79,6 +64,22 @@ public class PaymentOrderControllerTest {
                 .andExpect(xpath("/paymentOrderDto/paymentPriorityAuto").string("n"))
                 .andExpect(xpath("/paymentOrderDto/paymentSendType").string("s"))
                 .andExpect(xpath("/paymentOrderDto/paymentPurposeCode").string("1"));
+
+        PaymentOrder newPaymentOrder = repository.findByPaymentOrderNumber("1234567890");
+
+        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        Date newDateToCheck = isoFormat.parse("2020-12-03T09:28:00.000+00:00");
+
+        assertEquals(newPaymentOrder.getId().longValue(), 1L);
+        assertEquals(newPaymentOrder.getCommissionSum().compareTo(BigDecimal.valueOf(22.22)), 0);
+        assertEquals(newPaymentOrder.getDate().compareTo(newDateToCheck), 0);
+        assertEquals(newPaymentOrder.getPaymentPriority(), "5");
+        assertEquals(newPaymentOrder.getPaymentPriorityAuto(), "n");
+        assertEquals(newPaymentOrder.getPaymentPurpose(), "test_purpose");
+        assertEquals(newPaymentOrder.getPaymentPurposeCode(), "1");
+        assertEquals(newPaymentOrder.getPaymentSendType(), "s");
+        assertEquals(newPaymentOrder.getPaymentSum().compareTo(BigDecimal.valueOf(1111.11)), 0);
+        assertEquals(newPaymentOrder.getTransKind(), "kt");
     }
 
     @Test
@@ -88,6 +89,6 @@ public class PaymentOrderControllerTest {
                 .content(readResourcesFileContentAsString("test_payment_order.xml"))
                 .contentType(MediaType.APPLICATION_XML)
         ).andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().is5xxServerError());
     }
 }

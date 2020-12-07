@@ -1,7 +1,7 @@
 <paymentOrderDto>
     <transKind>kt</transKind>
     <paymentOrderNumber>1234567890</paymentOrderNumber>
-    <date>2020-12-03T09:28:15.637+00:00</date>
+    <date>2020-12-03T09:28:00.000+00:00</date>
     <paymentSum>1111.11</paymentSum>
     <commissionSum>22.22</commissionSum>
     <paymentPurpose>test_purpose</paymentPurpose>
