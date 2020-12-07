@@ -10,7 +10,9 @@ import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Configuration
@@ -20,10 +22,11 @@ class LoadDatabase {
 	private static final List<PaymentOrder> PO_LIST = new ArrayList<>();
 
 	private void initPaymentOrders() {
+		Date dateForFirstPO = new GregorianCalendar(2020, Calendar.DECEMBER, 4).getTime();
 		PO_LIST.add(PaymentOrder.builder()
 				.id(1L)
 				.commissionSum(BigDecimal.valueOf(-100L))
-				.date(new Date())
+				.date(dateForFirstPO)
 				.paymentOrderNumber("1234")
 				.paymentPriority("0")
 				.paymentPriorityAuto("y")
