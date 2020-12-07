@@ -10,7 +10,10 @@ public class NoContentToUpdateException extends Exception{
 
     public NoContentToUpdateException(String message){
         super(message);
-        log.error(message);
+    }
+
+    public NoContentToUpdateException(){
+        super();
     }
 
 }
