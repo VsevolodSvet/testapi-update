@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 
@@ -13,8 +14,8 @@ import java.util.Date;
 @Slf4j
 public class PaymentOrderExceptionHandler {
 
-    @ExceptionHandler(NoContentToUpdateException.class)
-    public ResponseEntity<?> noContentToUpdateExceptionHandler(NoContentToUpdateException e, WebRequest request) {
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<?> responseStatusExceptionHandler(ResponseStatusException e, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), e.getMessage(), request.getDescription(false));
         log.error("{}", errorDetails);
         return new ResponseEntity<>(errorDetails, HttpStatus.NO_CONTENT);
